@@ -56,9 +56,11 @@ namespace Contact.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
             app.UseRouting();
 
-            app.UseStaticFiles();
+            app.UseExceptionHandler("/error");
 
             app.UseEndpoints(endpoints =>
             {
