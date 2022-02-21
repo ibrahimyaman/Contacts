@@ -143,36 +143,40 @@ namespace Core.DataAccess.EntityFramework
         }
 
 
-        public TEntity Get(Expression<Func<TEntity, bool>> filter)
+        public TEntity Get(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includes)
         {
             using (var context = new TContext())
             {
-                return context.Set<TEntity>().SingleOrDefault(filter);
+                var query = context.Set<TEntity>().Where(filter);
+                return includes.Aggregate(query, (current, includeProperty)=> current.Include(includeProperty)).SingleOrDefault();
             }
         }
-        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter)
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includes)
         {
             using (var context = new TContext())
             {
-                return await context.Set<TEntity>().SingleOrDefaultAsync(filter);
+                var query = context.Set<TEntity>().Where(filter);
+                return await includes.Aggregate(query, (current, includeProperty) => current.Include(includeProperty)).SingleOrDefaultAsync();
             }
         }
 
 
-        public IEnumerable<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
+        public IEnumerable<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes)
         {
             using (var context = new TContext())
             {
-                return filter == null ? context.Set<TEntity>().ToList() :
-                                        context.Set<TEntity>().Where(filter).ToList();
+                var query = filter == null ? context.Set<TEntity>() :
+                                        context.Set<TEntity>().Where(filter);
+                return includes.Aggregate(query, (current, includeProperty) => current.Include(includeProperty)).ToList();
             }
         }
-        public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null)
+        public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes)
         {
             using (var context = new TContext())
             {
-                return filter == null ? await context.Set<TEntity>().ToListAsync() :
-                                        await context.Set<TEntity>().Where(filter).ToListAsync();
+                var query = filter == null ? context.Set<TEntity>() :
+                                          context.Set<TEntity>().Where(filter);
+                return await includes.Aggregate(query, (current, includeProperty) => current.Include(includeProperty)).ToListAsync();
             }
         }
     }

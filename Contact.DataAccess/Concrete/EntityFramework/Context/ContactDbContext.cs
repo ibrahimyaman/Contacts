@@ -29,7 +29,8 @@ namespace Contact.DataAccess.Concrete.EntityFramework.Context
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ContactInfo>().HasKey(h => h.PersonUUID);
+            modelBuilder.Entity<Person>().HasKey(h => h.UUID);
+            modelBuilder.Entity<Report>().HasKey(h => h.UUID);
 
             modelBuilder.Entity<ContactInfo>()
                 .HasOne(e => e.Person)
