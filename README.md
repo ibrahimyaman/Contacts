@@ -23,7 +23,9 @@ This API is a REST Api. So you can consume this api according to REST Api rules.
 
 #### To manage contact
 **{domain}/api/people** - GET 	 				(List all contacts)
+
 **{domain}/api/people/{guid}** - GET		(Get a contact by uuid)
+
 **{domain}/api/people** - POST				(Add new contact)
 ###### Requet body
 `{"Name":"a name", "Surname":"A surname"}`
@@ -44,19 +46,27 @@ This API is a REST Api. So you can consume this api according to REST Api rules.
 }`
 
 **{domain}/api/people/{guid}/contactinfos** - GET (List contact infos by person)
+
 **{domain}/api/people/{guid}/contactinfos/{id}** - GET (Get a contact info data by ID)
+
 **{domain}/api/people/{guid}/contactinfos** - POST (Add new info)
 ###### Requet body
 `{"InfoType":2, "Info":"Istanbul"}`
+
 `{"InfoType":0, "Info":"+905xxxxxxxx"}`
+
 **{domain}/api/people/{guid}/contactinfos** - PUT (Update contact info)
 ###### Requet body
 `{"InfoType":2, "Info":"Ankara"}`
+
 `{"InfoType":0, "Info":"+906xxxxxxxx"}`
+
 **{domain}/api/people/{guid}/contactinfos** - DELETE (Delete contact info)
 
 #### To manage reports
 
 **{domain}/api/reports** - GET (List all reports)
+
 **{domain}/api/reports/{guid}** - GET (Get a report by uuid)
+
 **{domain}/api/reports/createnewreport** - GET (A request that sends a message to background service via RabbitMQ)
