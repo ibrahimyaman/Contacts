@@ -3,7 +3,7 @@
 This API project provides you to create a contact list and its detail info such as location, phone or e-mail. 
 
 ### Installation
-First thing after you download source codes is to write connection string of your postgre sql server in **Cotact.DataAccess/dalsettings.json**. And then migrate database structure to the server by using *update-database*.
+First thing after you download source codes is to write connection string of your postgre sql server in **Contact.DataAccess/dalsettings.json**. And then migrate database structure to the server by using *update-database*.
 
 `{
   "ConnectionStrings": {
